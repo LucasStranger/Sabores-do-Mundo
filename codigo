@@ -1,0 +1,70 @@
+filiais = {}
+
+def cadastrar_novo_cardapio():
+    nomedaempresa = input("Digite o nome da empresa para criar um novo cardápio: ")
+    filiais[nomedaempresa] = {'cardapio': {}}
+
+def pesquisar_cardapio():
+    nomedaempresa = input("Digite o nome da empresa para pesquisar o cardápio: ")
+    cardapio_encontrado = filiais.get(nomedaempresa, {}).get('cardapio', {})
+
+    if cardapio_encontrado:
+        print(f"\nCardápio de {nomedaempresa}:\n")
+        for nome_receita, receita_info in cardapio_encontrado.items():
+            print(f"({nome_receita})\n{receita_info['ingredientes']}\n\nModo de Preparo: {receita_info['preparo']}\nPreço: {receita_info['preco']} por um prato")
+            print("--------------------")
+    else:
+        print(f"Cardápio de {nomedaempresa} não encontrado.")
+
+def cadastrar_receita():
+    nomedaempresa = input("Digite o nome da empresa para cadastrar a receita: ")
+    cardapio_atual = filiais.get(nomedaempresa, {}).get('cardapio', {})
+    
+    if cardapio_atual:
+        nome = input("Digite o nome da receita: ")
+        ingredientes = input("Digite os ingredientes (linha por linha, digite fim para encerrar a parte dos ingredientes):\n")
+        preparo = input("Digite o modo de preparo: ")
+        preco = float(input("Digite o preço de um prato da receita: "))
+
+        cardapio_atual[nome] = {'ingredientes': ingredientes, 'preparo': preparo, 'preco': preco}
+    else:
+        print(f"Cardápio de {nomedaempresa} não encontrado. Utilize a opção 1 para cadastrar um novo cardápio.")
+
+def pesquisar_receita():
+    nomedaempresa = input("Digite o nome da empresa para pesquisar a receita: ")
+    cardapio_atual = filiais.get(nomedaempresa, {}).get('cardapio', {})
+
+    if cardapio_atual:
+        nome_pesquisa = input("Digite o nome da receita que deseja pesquisar: ")
+        receita_encontrada = cardapio_atual.get(nome_pesquisa)
+
+        if receita_encontrada:
+            print(f"\n({nome_pesquisa})\n{receita_encontrada['ingredientes']}\n\nModo de Preparo: {receita_encontrada['preparo']}\nPreço: {receita_encontrada['preco']} por um prato")
+        else:
+            print(f"Receita '{nome_pesquisa}' não encontrada.")
+    else:
+        print(f"Cardápio da {nomedaempresa} não encontrado. Utilize a opção 1 para cadastrar um novo cardápio.")
+
+while True:
+    print("\n—— Menu ——")
+    print("1. Cadastrar novo cardápio")
+    print("2. Pesquisar cardápio")
+    print("3. Cadastrar receita em cardápio")
+    print("4. Pesquisar Receita")
+    print("5. Sair")
+
+    escolha = input("Escolha uma opção (1, 2, 3, 4 ou 5): ")
+
+    if escolha == '1':
+        cadastrar_novo_cardapio()
+    elif escolha == '2':
+        pesquisar_cardapio()
+    elif escolha == '3':
+        cadastrar_receita()
+    elif escolha == '4':
+        pesquisar_receita()
+    elif escolha == '5':
+        print("Saindo do programa. Até logo!")
+        break
+    else:
+        print("Opção inválida. Por favor, escolha 1, 2, 3, 4 ou 5.")
