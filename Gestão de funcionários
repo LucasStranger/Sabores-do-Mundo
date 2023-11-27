@@ -1,0 +1,69 @@
+class Funcionario:
+    def __init__(self, nome, cargo, historico_profissional):
+        self.nome = nome
+        self.cargo = cargo
+        self.historico_profissional = historico_profissional
+
+
+class EscalaTrabalho:
+    def __init__(self, data, turno, funcionarios):
+        self.data = data
+        self.turno = turno
+        self.funcionarios = funcionarios
+
+
+class GerenteFilial:
+    def __init__(self, nome, permissoes):
+        self.nome = nome
+        self.permissoes = permissoes
+
+    def adicionar_permissao(self, permissao):
+        self.permissoes.append(permissao)
+
+    def cadastrar_funcionario(self, funcionario):
+        # Lógica para cadastrar um funcionário na filial
+        pass
+
+    def gerenciar_escala_trabalho(self, escala):
+        # Lógica para gerenciar escalas de trabalho
+        pass
+
+    # Outras funcionalidades para avaliação de desempenho, registro de horas, canal de comunicação, etc.
+
+
+class SistemaCadastroPerfis:
+    def __init__(self):
+        self.perfis = {}
+
+    def criar_perfil(self, nome, permissoes):
+        novo_perfil = GerenteFilial(nome, permissoes)
+        self.perfis[nome] = novo_perfil
+        print(f"Perfil '{nome}' criado com sucesso.")
+
+    def salvar_em_txt(self, nome_arquivo):
+        # Lógica para salvar dados em formato txt
+        pass
+
+    def salvar_em_csv(self, nome_arquivo):
+        # Lógica para salvar dados em formato csv
+        pass
+
+
+# Exemplo de Uso:
+sistema = SistemaCadastroPerfis()
+
+# Criar perfis
+sistema.criar_perfil("Gerente", ["Acesso Total"])
+sistema.criar_perfil("Gerente Filial", [])
+
+# Simular login como Gerente
+usuario_gerente = True  # Simulação de login com sucesso como Gerente
+
+if usuario_gerente:
+    # Simular ações de um Gerente, como cadastrar funcionários e gerenciar escalas de trabalho
+    pass
+
+# Salvar dados em arquivos .txt e .csv
+sistema.salvar_em_txt("dados_perfis")
+sistema.salvar_em_csv("dados_perfis")
+
