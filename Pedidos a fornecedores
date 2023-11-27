@@ -1,0 +1,60 @@
+class SistemaCadastroPerfis:
+    def __init__(self):
+        self.perfis = {}
+
+    # Métodos para criar perfis e adicionar permissões
+    # ... (mantendo o código existente para criar e salvar perfis)
+
+    # Pedidos a Fornecedores
+    def gerar_pedidos(self, gerente):
+        if 'Pedidos a Fornecedores' in self.perfis[gerente].permissoes:
+            print("Gerando pedidos a fornecedores...")
+            # Lógica para gerar pedidos automáticos a fornecedores
+            # Aqui você pode adicionar a lógica para criar os pedidos
+        else:
+            print("Sem permissão para gerar pedidos a fornecedores.")
+
+    def alerta_reabastecimento(self, gerente):
+        if 'Pedidos a Fornecedores' in self.perfis[gerente].permissoes:
+            print("Enviando alertas de reabastecimento...")
+            # Lógica para enviar alertas de reabastecimento
+            # Aqui você pode adicionar a lógica para enviar os alertas por e-mail
+        else:
+            print("Sem permissão para enviar alertas de reabastecimento.")
+
+    def cadastrar_fornecedores(self, gerente):
+        if 'Cadastro de Fornecedores' in self.perfis[gerente].permissoes:
+            print("Cadastrando informações de fornecedores...")
+            # Lógica para cadastrar informações sobre os fornecedores
+            # Aqui você pode adicionar a lógica para inserir os dados dos fornecedores
+        else:
+            print("Sem permissão para cadastrar fornecedores.")
+
+    def salvar_pedidos_em_txt(self, nome_arquivo):
+        with open(nome_arquivo + '_pedidos.txt', 'w', encoding='utf-8') as file:
+            # Lógica para salvar pedidos em arquivo de texto
+            file.write("Lista de pedidos:\n")
+            # Aqui você pode adicionar a lógica para escrever os pedidos no arquivo
+        print(f"Pedidos salvos em '{nome_arquivo}_pedidos.txt'.")
+
+    def salvar_pedidos_em_csv(self, nome_arquivo):
+        import csv
+
+        with open(nome_arquivo + '_pedidos.csv', 'w', newline='', encoding='utf-8-sig') as file:
+            writer = csv.writer(file)
+            # Lógica para salvar pedidos em arquivo CSV
+            writer.writerow(['ID Pedido', 'Fornecedor', 'Produtos', 'Quantidade'])
+            # Aqui você pode adicionar a lógica para escrever os pedidos no arquivo CSV
+        print(f"Pedidos salvos em '{nome_arquivo}_pedidos.csv'.")
+
+# Exemplo de uso (para demonstração)
+sistema = SistemaCadastroPerfis()
+
+# ... (código para criar perfis - mantido)
+
+# Chamadas de métodos relacionados aos pedidos a fornecedores
+sistema.gerar_pedidos('Gerente A')
+sistema.alerta_reabastecimento('Gerente B')
+sistema.cadastrar_fornecedores('Gerente C')
+sistema.salvar_pedidos_em_txt("pedidos_fornecedores")
+sistema.salvar_pedidos_em_csv("pedidos_fornecedores")
