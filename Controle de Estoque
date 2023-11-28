@@ -1,0 +1,87 @@
+class PerfilAcesso:
+    def __init__(self, nome, areas_acesso):
+        self.nome = nome
+        self.areas_acesso = areas_acesso
+        self.estoque = Estoque()
+        self.inicializar_estoque()
+
+    def inicializar_estoque(self):
+        if "monitorar_estoque" in self.areas_acesso:
+            self.estoque.atualizar_estoque("Maça", 50)
+            self.estoque.atualizar_estoque("Banana", 15)  
+
+class Estoque:
+    def __init__(self):
+        self.estoque = {}
+
+    def monitorar_estoque(self):
+        return self.estoque
+
+    def atualizar_estoque(self, produto, quantidade):
+        if produto in self.estoque:
+            self.estoque[produto] += quantidade
+        else:
+            self.estoque[produto] = quantidade
+
+        if self.estoque[produto] < 20:
+            print(f"ALERTA: Estoque baixo para o produto {produto} ({self.estoque[produto]} unidades).")
+
+    def alerta_estoque_baixo(self, produto, limite):
+        if produto in self.estoque and self.estoque[produto] < limite:
+            return f"ALERTA: Estoque baixo para o produto {produto}!"
+        return None
+
+class SistemaEstoque:
+    def __init__(self):
+        self.perfis_acesso = {}
+
+    def criar_perfil_acesso(self, nome, areas_acesso):
+        perfil = PerfilAcesso(nome, areas_acesso)
+        self.perfis_acesso[nome] = perfil
+
+    def listar_perfis(self):
+        return list(self.perfis_acesso.keys())
+
+    def selecionar_perfil(self, perfil):
+        if perfil in self.perfis_acesso:
+            print(f"Perfil {perfil} selecionado.")
+            return self.perfis_acesso[perfil]
+        else:
+            print("Perfil não encontrado.")
+            return None
+
+    def executar_acao(self, perfil):
+        if perfil:
+            if "Gerente" in perfil.nome:
+                acao = input("Escolha a ação (monitorar estoque ou atualizar estoque): ")
+                if acao == "monitorar estoque" and "monitorar_estoque" in perfil.areas_acesso:
+                    print(perfil.estoque.monitorar_estoque())
+                elif acao == "atualizar estoque" and "atualizar_estoque" in perfil.areas_acesso:
+                    produto = input("Digite o produto: ")
+                    quantidade = int(input("Digite a quantidade: "))
+                    perfil.estoque.atualizar_estoque(produto, quantidade)
+                    print(f"Estoque atualizado para {produto}.")
+                    print("Estado atual do estoque:")
+                    print(perfil.estoque.monitorar_estoque())
+                else:
+                    print("Ação não reconhecida ou sem permissão.")
+            elif "ChefDeCozinha" in perfil.nome:
+                print(perfil.estoque.monitorar_estoque())
+            else:
+                print("Perfil não reconhecido.")
+            return None
+
+sistema = SistemaEstoque()
+
+sistema.criar_perfil_acesso("Gerente", ["monitorar_estoque", "atualizar_estoque", "alerta_estoque_baixo"])
+sistema.criar_perfil_acesso("ChefDeCozinha", ["monitorar_estoque"])
+
+print("Perfis disponíveis:", sistema.listar_perfis())
+
+perfil_escolhido = input("Escolha um perfil: ")
+perfil_atual = sistema.selecionar_perfil(perfil_escolhido)
+
+if perfil_atual:
+    sistema.executar_acao(perfil_atual)
+else:
+    print("Perfil não selecionado.")
